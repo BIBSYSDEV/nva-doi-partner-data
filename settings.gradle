@@ -1,0 +1,3 @@
+rootProject.name = 'nva-doi-partner-data'
+include 'datacite-data'
+
