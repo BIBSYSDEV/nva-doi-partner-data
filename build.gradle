@@ -1,0 +1,79 @@
+allprojects {
+    repositories {
+        jcenter()
+    }
+    group 'no.unit.nva'
+    version '1.0-SNAPSHOT'
+
+    apply plugin: 'java-library'
+    apply plugin: 'jacoco'
+    apply plugin: 'checkstyle'
+    apply plugin: 'pmd'
+
+    dependencies {
+        def junit5Version = '5.6.0'
+        testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junit5Version
+        testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-migrationsupport', version: junit5Version
+        testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junit5Version
+    }
+
+    test {
+        useJUnitPlatform()
+        failFast = true
+        testLogging {
+            events = ['skipped', 'passed', 'failed']
+        }
+        finalizedBy jacocoTestReport
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.enabled true
+        }
+    }
+
+    pmd {
+        ruleSetConfig = rootProject.resources.text.fromFile('config/pmd/ruleset.xml')
+        ruleSets = []
+        ignoreFailures = false
+    }
+
+    checkstyle {
+        configFile = rootProject.resources.text.fromFile('config/checkstyle/checkstyle.xml').asFile()
+        showViolations = true
+    }
+
+    tasks.withType(Checkstyle) {
+        reports {
+            xml.enabled false
+            html.enabled true
+            html.stylesheet rootProject.resources.text.fromFile('config/checkstyle/checkstyle-simple.xsl')
+        }
+    }
+
+    check.dependsOn jacocoTestCoverageVerification
+    jacocoTestCoverageVerification.dependsOn(jacocoTestReport)
+
+    jacocoTestCoverageVerification {
+        violationRules {
+            rule {
+                excludes = ['**datacite**']
+                limit {
+                    counter = 'METHOD'
+                    value = 'COVEREDRATIO'
+                    minimum = 1.00
+                }
+            }
+
+            rule {
+                limit {
+                    counter = 'CLASS'
+                    value = 'COVEREDRATIO'
+                    minimum = 1.00
+                }
+                excludes = ['**datacite**']
+            }
+        }
+    }
+
+}
