@@ -5,3 +5,5 @@ dependencies {
     implementation files(project(":datacite-data").tasks.jar)
     testImplementation group: 'org.hamcrest', name: 'hamcrest-core', version: '2.2'
 }
+
+tasks.getByName('build').dependsOn( project(':datacite-data').tasks.getByName('jar'))

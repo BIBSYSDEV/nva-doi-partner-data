@@ -54,8 +54,8 @@ Resources:
   NvaCreateDoiRequestHandler:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: create-doi-request
-      Handler: no.unit.nva.doi.requests.handlers.CreateDoiRequestHandler::handleRequest
+      CodeUri: transform-handler
+      Handler: handlers.EventHandler::handleRequest
       Runtime: java11
       MemorySize: 1400
       Role: !GetAtt LambdaRole.Arn

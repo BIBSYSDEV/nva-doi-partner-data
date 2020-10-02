@@ -1,4 +1,6 @@
-allprojects {
+
+
+subprojects {
     repositories {
         maven { url 'https://jitpack.io' }
         jcenter()
@@ -20,13 +22,14 @@ allprojects {
         nvaDatamodelJavaVersion = '0.10.6'
     }
 
+
+
     dependencies {
         def junit5Version = '5.6.0'
         testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junit5Version
         testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-migrationsupport', version: junit5Version
         testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junit5Version
     }
-
     test {
         useJUnitPlatform()
         failFast = true
