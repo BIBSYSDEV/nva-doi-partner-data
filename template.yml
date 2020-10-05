@@ -12,7 +12,7 @@ Metadata:
     Author: Unit
     SpdxLicenseId: MIT
     LicenseUrl: LICENSE
-    Labels: ['${GIT_REPO}', '${CODEBUILD_RESOLVED_SOURCE_VERSION}', '@${BUILD_TIMESTAMP}']
+    Labels: [ '${GIT_REPO}', '${CODEBUILD_RESOLVED_SOURCE_VERSION}', '@${BUILD_TIMESTAMP}' ]
 
 Globals:
   Function:
@@ -50,12 +50,27 @@ Resources:
                   - sts:TagSession
                 Resource: "*"
 
-  NvaCreateDoiRequestHandler:
+  EventConsumer:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: transform-handler
-      Handler: handlers.EventHandler::handleRequest
+      Handler: handlers.EventConsumer::handleRequest
       Runtime: java11
       MemorySize: 1400
       Role: !GetAtt LambdaRole.Arn
+  EventConducer:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: transform-handler
+      Handler: handlers.EventConducer::handleRequest
+      Runtime: java11
+      MemorySize: 1400
+      Role: !GetAtt LambdaRole.Arn
+
+  EventBus:
+    Type: AWS::Events::EventBus
+    Properties:
+      EventSourceName: orestisTestEventSource
+      Name: orestis-event-bus
+
 
