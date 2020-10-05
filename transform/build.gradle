@@ -6,4 +6,4 @@ dependencies {
     testImplementation group: 'org.hamcrest', name: 'hamcrest-core', version: '2.2'
 }
 
-tasks.getByName('build').dependsOn( project(':datacite-data').tasks.getByName('jar'))
+//tasks.getByName('jar').dependsOn( project(':datacite-data').tasks.getByName('jar'))
