@@ -4,39 +4,24 @@ import static nva.commons.utils.attempt.Try.attempt;
 
 import com.amazonaws.services.lambda.runtime.events.ScheduledEvent;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JavaType;
 import exceptions.EventException;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import nva.commons.utils.JsonUtils;
 import nva.commons.utils.attempt.Failure;
 import nva.commons.utils.attempt.Try;
 import org.joda.time.DateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * {
- *     "version": "0",
- *     "id": "04672dec-d61e-d8cb-de6b-955b0a837d91",
- *     "detail-type": "Scheduled Event",
- *     "source": "aws.events",
- *     "account": "884807050265",
- *     "time": "2020-10-05T11:07:57Z",
- *     "region": "eu-west-1",
- *     "resources": [
- *         "arn:aws:events:eu-west-1:884807050265:rule/testRule"
- *     ],
- *     "detail": {}
- * }
+ * { "version": "0", "id": "04672dec-d61e-d8cb-de6b-955b0a837d91", "detail-type": "Scheduled Event", "source":
+ * "aws.events", "account": "884807050265", "time": "2020-10-05T11:07:57Z", "region": "eu-west-1", "resources": [
+ * "arn:aws:events:eu-west-1:884807050265:rule/testRule" ], "detail": {} }
  */
 public class EventBridgeEvent<I> extends ScheduledEvent {
 
-    Logger logger = LoggerFactory.getLogger(EventBridgeEvent.class);
-
     private EventBridgeEvent(Builder builder) {
+        super();
         setAccount(builder.account);
         setRegion(builder.region);
         setDetail(builder.detail);
@@ -105,14 +90,14 @@ public class EventBridgeEvent<I> extends ScheduledEvent {
             return this;
         }
 
-        public Builder withDetailType(String detailType) {
-            this.detailType = detailType;
+        public <I> Builder withDetail(I object) {
+            TypeReference<Map<String, Object>> typeReference = new TypeReference<>() {};
+            this.detail = JsonUtils.objectMapper.convertValue(object, typeReference);
             return this;
         }
 
-        public <I> Builder withDetail(I object){
-            TypeReference<Map<String,Object>> typeReference = new TypeReference<>() {};
-            this.detail = JsonUtils.objectMapper.convertValue(object, typeReference);
+        public Builder withDetailType(String detailType) {
+            this.detailType = detailType;
             return this;
         }
 
