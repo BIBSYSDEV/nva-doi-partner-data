@@ -76,7 +76,7 @@ Resources:
   EventBus:
     Type: AWS::Events::EventBus
     Properties:
-      EventSourceName: orestisTestEventSource
+      EventSourceName: OrestisTestEventSource
       Name: orestis-event-bus
 
 
