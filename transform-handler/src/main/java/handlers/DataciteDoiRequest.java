@@ -65,6 +65,7 @@ public class DataciteDoiRequest {
         this.xml = xml;
     }
 
+    @Override
     public String toString() {
         try {
             return JsonUtils.objectMapper.writeValueAsString(this);
