@@ -70,8 +70,11 @@ Resources:
         Variables:
           EVENT_BUS: !GetAtt EventBus.Name
       Events:
-        EventBusName: !GetAtt EventBus.Name
-        Pattern: {  "detail-type": [ "MyType" ] }
+        EventBridgeEvent:
+          Type: EventBridgeRule
+          Properties:
+            EventBusName: !GetAtt EventBus.Name
+            Pattern: {  "detail-type": [ "MyType" ] }
   EventConducer:
     Type: AWS::Serverless::Function
     Properties:
