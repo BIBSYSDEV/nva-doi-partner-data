@@ -1,6 +1,7 @@
 package handlers;
 
 import java.net.URI;
+import nva.commons.utils.JsonUtils;
 
 public class DataciteDoiRequest {
 
@@ -62,6 +63,14 @@ public class DataciteDoiRequest {
 
     public void setXml(String xml) {
         this.xml = xml;
+    }
+
+    public String toString() {
+        try {
+            return JsonUtils.objectMapper.writeValueAsString(this);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static final class Builder {
