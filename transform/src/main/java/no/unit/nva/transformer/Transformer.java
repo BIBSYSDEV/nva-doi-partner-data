@@ -1,5 +1,10 @@
 package no.unit.nva.transformer;
 
+import java.io.StringWriter;
+import java.util.stream.Collectors;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import no.unit.nva.transformer.dto.CreatorDto;
 import no.unit.nva.transformer.dto.DynamoRecordDto;
 import org.datacite.schema.kernel_4.Resource;
@@ -7,31 +12,45 @@ import org.datacite.schema.kernel_4.Resource.Publisher;
 import org.datacite.schema.kernel_4.Resource.Titles;
 import org.datacite.schema.kernel_4.Resource.Titles.Title;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import java.io.StringWriter;
-import java.util.stream.Collectors;
-
-
 public class Transformer {
+
+    private final static JAXBContext jaxbContext = getJaxbContext();
     private final Resource resource;
     private final DynamoRecordDto dynamoRecordDto;
-
     private final Marshaller marshaller;
 
     /**
      * Transforms a DynamoDB record to a Datacite Record.
+     *
      * @param dynamoRecordDto A DynamoDB record.
      * @throws JAXBException If the XML initialisation fails.
      */
     public Transformer(DynamoRecordDto dynamoRecordDto) throws JAXBException {
-        JAXBContext jaxbContext = JAXBContext.newInstance(Resource.class);
         marshaller = jaxbContext.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         this.dynamoRecordDto = dynamoRecordDto;
         this.resource = new Resource();
         fromDynamoRecord();
+    }
+
+    /**
+     * Produces an XML string representation of the Datacite record.
+     *
+     * @return String XML.
+     * @throws JAXBException If the record cannot be produced.
+     */
+    public String asXml() throws JAXBException {
+        StringWriter stringWriter = new StringWriter();
+        marshaller.marshal(resource, stringWriter);
+        return stringWriter.toString();
+    }
+
+    private static JAXBContext getJaxbContext() {
+        try {
+            return JAXBContext.newInstance(Resource.class);
+        } catch (JAXBException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void fromDynamoRecord() {
@@ -72,20 +91,9 @@ public class Transformer {
     private void setResourceCreators() {
         var creators = new Resource.Creators();
         dynamoRecordDto.getCreator().stream()
-                .map(CreatorDto::toCreator)
-                .collect(Collectors.toList())
-                .forEach(creator -> creators.getCreator().add(creator));
+            .map(CreatorDto::toCreator)
+            .collect(Collectors.toList())
+            .forEach(creator -> creators.getCreator().add(creator));
         resource.setCreators(creators);
-    }
-
-    /**
-     * Produces an XML string representation of the Datacite record.
-     * @return String XML.
-     * @throws JAXBException If the record cannot be produced.
-     */
-    public String asXml() throws JAXBException {
-        StringWriter stringWriter = new StringWriter();
-        marshaller.marshal(resource, stringWriter);
-        return stringWriter.toString();
     }
 }

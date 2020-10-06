@@ -49,6 +49,14 @@ Resources:
                   - sts:AssumeRole
                   - sts:TagSession
                 Resource: "*"
+        - PolicyName: Events
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - events:*
+            Resource: "*"
 
   EventConsumer:
     Type: AWS::Serverless::Function
@@ -61,6 +69,9 @@ Resources:
       Environment:
         Variables:
           EVENT_BUS: !GetAtt EventBus.Name
+      Events:
+        EventBusName: !GetAtt EventBus.Name
+        Pattern: {  "detail-type": [ "MyType" ] }
   EventConducer:
     Type: AWS::Serverless::Function
     Properties:
