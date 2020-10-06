@@ -12,11 +12,7 @@ import nva.commons.utils.JsonUtils;
 import nva.commons.utils.attempt.Failure;
 import nva.commons.utils.attempt.Try;
 
-/**
- * { "version": "0", "id": "04672dec-d61e-d8cb-de6b-955b0a837d91", "detail-type": "Scheduled Event", "source":
- * "aws.events", "account": "884807050265", "time": "2020-10-05T11:07:57Z", "region": "eu-west-1", "resources": [
- * "arn:aws:events:eu-west-1:884807050265:rule/testRule" ], "detail": {} }
- */
+
 public class EventBridgeEvent<I> {
 
     private String account;
@@ -48,7 +44,7 @@ public class EventBridgeEvent<I> {
         return new Builder();
     }
 
-    public static Builder newBuilder(EventBridgeEvent copy) {
+    public static <I> Builder newBuilder(EventBridgeEvent<I> copy) {
         Builder builder = new Builder();
         builder.account = copy.getAccount();
         builder.region = copy.getRegion();
@@ -123,6 +119,15 @@ public class EventBridgeEvent<I> {
 
     public void setResources(List<String> resources) {
         this.resources = resources;
+    }
+
+    @Override
+    public String toString() {
+        try {
+            return JsonUtils.objectMapper.writeValueAsString(this);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public I getDetailsObject() throws EventException {
