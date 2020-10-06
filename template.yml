@@ -56,7 +56,7 @@ Resources:
               - Effect: Allow
                 Action:
                   - events:*
-            Resource: "*"
+                Resource: "*"
 
   EventConsumer:
     Type: AWS::Serverless::Function
