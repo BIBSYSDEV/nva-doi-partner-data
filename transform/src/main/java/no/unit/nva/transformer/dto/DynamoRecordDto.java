@@ -1,7 +1,6 @@
 package no.unit.nva.transformer.dto;
 
 import java.util.List;
-import no.unit.nva.transformer.Transformer;
 
 public class DynamoRecordDto {
     private final IdentifierDto identifier;

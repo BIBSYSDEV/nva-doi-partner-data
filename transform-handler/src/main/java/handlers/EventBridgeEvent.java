@@ -21,7 +21,7 @@ import org.joda.time.DateTime;
 public class EventBridgeEvent<I> extends ScheduledEvent {
 
     public EventBridgeEvent(){
-
+        super();
     }
     private EventBridgeEvent(Builder builder) {
         super();

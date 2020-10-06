@@ -14,7 +14,7 @@ import org.datacite.schema.kernel_4.Resource.Titles.Title;
 
 public class Transformer {
 
-    private final static JAXBContext jaxbContext = getJaxbContext();
+    private static final JAXBContext jaxbContext = getJaxbContext();
     private final Resource resource;
     private final DynamoRecordDto dynamoRecordDto;
     private final Marshaller marshaller;
