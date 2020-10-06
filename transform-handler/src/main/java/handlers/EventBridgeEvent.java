@@ -20,6 +20,9 @@ import org.joda.time.DateTime;
  */
 public class EventBridgeEvent<I> extends ScheduledEvent {
 
+    public EventBridgeEvent(){
+
+    }
     private EventBridgeEvent(Builder builder) {
         super();
         setAccount(builder.account);
