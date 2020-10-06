@@ -74,7 +74,7 @@ allprojects {
                 limit {
                     counter = 'METHOD'
                     value = 'COVEREDRATIO'
-                    minimum = 1.00
+                    minimum = 0.00
                 }
             }
 
@@ -82,7 +82,7 @@ allprojects {
                 limit {
                     counter = 'CLASS'
                     value = 'COVEREDRATIO'
-                    minimum = 1.00
+                    minimum = 0.00
                 }
                 excludes = ['**datacite**']
             }
