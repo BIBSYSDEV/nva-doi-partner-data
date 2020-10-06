@@ -2,27 +2,36 @@ package handlers;
 
 import static nva.commons.utils.attempt.Try.attempt;
 
-import com.amazonaws.services.lambda.runtime.events.ScheduledEvent;
 import com.fasterxml.jackson.core.type.TypeReference;
 import exceptions.EventException;
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import nva.commons.utils.JsonUtils;
 import nva.commons.utils.attempt.Failure;
 import nva.commons.utils.attempt.Try;
-import org.joda.time.DateTime;
 
 /**
  * { "version": "0", "id": "04672dec-d61e-d8cb-de6b-955b0a837d91", "detail-type": "Scheduled Event", "source":
  * "aws.events", "account": "884807050265", "time": "2020-10-05T11:07:57Z", "region": "eu-west-1", "resources": [
  * "arn:aws:events:eu-west-1:884807050265:rule/testRule" ], "detail": {} }
  */
-public class EventBridgeEvent<I> extends ScheduledEvent {
+public class EventBridgeEvent<I> {
 
-    public EventBridgeEvent(){
+    private String account;
+    private String region;
+    private Map<String, Object> detail;
+    private String detailType;
+    private String source;
+    private String id;
+    private Instant time;
+    private List<String> resources;
+
+    public EventBridgeEvent() {
         super();
     }
+
     private EventBridgeEvent(Builder builder) {
         super();
         setAccount(builder.account);
@@ -52,6 +61,70 @@ public class EventBridgeEvent<I> extends ScheduledEvent {
         return builder;
     }
 
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public Map<String, Object> getDetail() {
+        return detail;
+    }
+
+    public void setDetail(Map<String, Object> detail) {
+        this.detail = detail;
+    }
+
+    public String getDetailType() {
+        return detailType;
+    }
+
+    public void setDetailType(String detailType) {
+        this.detailType = detailType;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Instant getTime() {
+        return time;
+    }
+
+    public void setTime(Instant time) {
+        this.time = time;
+    }
+
+    public List<String> getResources() {
+        return resources;
+    }
+
+    public void setResources(List<String> resources) {
+        this.resources = resources;
+    }
+
     public I getDetailsObject() throws EventException {
         TypeReference<I> typeReference = new TypeReference<>() {};
         return Optional.ofNullable(getDetail())
@@ -72,7 +145,7 @@ public class EventBridgeEvent<I> extends ScheduledEvent {
         private String detailType;
         private String source;
         private String id;
-        private DateTime time;
+        private Instant time;
         private List<String> resources;
 
         private Builder() {
@@ -114,7 +187,7 @@ public class EventBridgeEvent<I> extends ScheduledEvent {
             return this;
         }
 
-        public Builder withTime(DateTime time) {
+        public Builder withTime(Instant time) {
             this.time = time;
             return this;
         }

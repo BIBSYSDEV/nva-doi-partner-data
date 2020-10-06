@@ -1,0 +1,16 @@
+{
+  "version": "0",
+  "id": "295b7e0b-90fd-9334-b276-94635910f2e6",
+  "detail-type": "MyType",
+  "source": "Oresis Conducer",
+  "account": "884807050265",
+  "time": "2020-10-06T10:09:10Z",
+  "region": "eu-west-1",
+  "resources": [],
+  "detail": {
+    "publicationId": "https://somepublication.com",
+    "existingDoi": "http://somedoi.org",
+    "xml": "Somexml",
+    "type": "MyType"
+  }
+}
