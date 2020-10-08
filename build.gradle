@@ -66,14 +66,13 @@ allprojects {
             }
 
             rule {
+                excludes = ['**datacite**']
                 limit {
                     counter = 'CLASS'
                     value = 'COVEREDRATIO'
                     minimum = 1.00
                 }
-                excludes = ['**datacite**']
             }
         }
     }
-
 }
