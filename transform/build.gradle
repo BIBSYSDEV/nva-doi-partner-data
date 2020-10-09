@@ -2,6 +2,5 @@ dependencies {
     implementation(project(path: ':datacite-data'))
     implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
     implementation group: 'jakarta.xml.bind', name: 'jakarta.xml.bind-api', version: '2.3.2'
-    implementation group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.2'
-    testImplementation group: 'org.hamcrest', name: 'hamcrest-core', version: '2.2'
+    runtimeOnly group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.2'
 }
