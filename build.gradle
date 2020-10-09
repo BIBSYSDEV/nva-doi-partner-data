@@ -6,14 +6,19 @@ allprojects {
     repositories {
         jcenter()
     }
-    group 'no.unit.nva'
-    version '1.0-SNAPSHOT'
 
     apply plugin: 'java-library'
     apply plugin: 'jacoco'
     apply plugin: 'checkstyle'
     apply plugin: 'pmd'
     apply plugin: 'nebula.lint'
+
+    group 'no.unit.nva'
+    version '1.0-SNAPSHOT'
+
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+
 
     gradleLint.rules = ['unused-dependency']
 
