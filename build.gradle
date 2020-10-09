@@ -24,8 +24,9 @@ allprojects {
 
     dependencies {
         def junit5Version = '5.6.0'
+        testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '2.2'
+        testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junit5Version
         testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junit5Version
-        testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-migrationsupport', version: junit5Version
         testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junit5Version
     }
 
@@ -56,6 +57,10 @@ allprojects {
     }
 
     tasks.withType(Checkstyle) {
+        exclude '**/org/datacite/schema/**'
+    }
+
+    tasks.withType(Checkstyle) {
         reports {
             xml.enabled false
             html.enabled true
@@ -78,14 +83,13 @@ allprojects {
             }
 
             rule {
+                excludes = ['**datacite**']
                 limit {
                     counter = 'CLASS'
                     value = 'COVEREDRATIO'
                     minimum = 1.00
                 }
-                excludes = ['**datacite**']
             }
         }
     }
-
 }
