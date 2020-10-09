@@ -15,8 +15,11 @@ import java.util.stream.Collectors;
 
 
 public class Transformer {
+    public static final String COULD_NOT_GET_JAXB_CONTEXT = "Could not get JAXBContext";
     private final Resource resource;
     private final DynamoRecordDto dynamoRecordDto;
+
+    private static final JAXBContext jaxbContext = getContext();
 
     private final Marshaller marshaller;
 
@@ -26,12 +29,19 @@ public class Transformer {
      * @throws JAXBException If the XML initialisation fails.
      */
     public Transformer(DynamoRecordDto dynamoRecordDto) throws JAXBException {
-        JAXBContext jaxbContext = JAXBContext.newInstance(Resource.class);
         marshaller = jaxbContext.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         this.dynamoRecordDto = dynamoRecordDto;
         this.resource = new Resource();
         fromDynamoRecord();
+    }
+
+    private static JAXBContext getContext() {
+        try {
+            return JAXBContext.newInstance(Resource.class);
+        } catch (JAXBException e) {
+            throw new RuntimeException(COULD_NOT_GET_JAXB_CONTEXT);
+        }
     }
 
     private void fromDynamoRecord() {
