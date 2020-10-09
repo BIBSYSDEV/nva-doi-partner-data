@@ -1,3 +1,7 @@
+plugins {
+    id 'nebula.lint' version '16.9.1'
+}
+
 allprojects {
     repositories {
         jcenter()
@@ -9,6 +13,9 @@ allprojects {
     apply plugin: 'jacoco'
     apply plugin: 'checkstyle'
     apply plugin: 'pmd'
+    apply plugin: 'nebula.lint'
+
+    gradleLint.rules = ['unused-dependency']
 
     dependencies {
         def junit5Version = '5.6.0'
