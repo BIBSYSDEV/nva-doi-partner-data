@@ -57,6 +57,10 @@ allprojects {
     }
 
     tasks.withType(Checkstyle) {
+        exclude '**/org/datacite/schema/**'
+    }
+
+    tasks.withType(Checkstyle) {
         reports {
             xml.enabled false
             html.enabled true
