@@ -1,5 +1,8 @@
 package no.unit.nva.transformer.dto;
 
+import no.unit.nva.transformer.Transformer;
+
+import javax.xml.bind.JAXBException;
 import java.util.List;
 
 public class DynamoRecordDto {
@@ -17,6 +20,10 @@ public class DynamoRecordDto {
         publisher = builder.publisher;
         publicationYear = builder.publicationYear;
         resourceType = builder.resourceType;
+    }
+
+    public String asXml() throws JAXBException {
+        return new Transformer(this).asXml();
     }
 
     public IdentifierDto getIdentifier() {

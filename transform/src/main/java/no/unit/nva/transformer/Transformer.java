@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 public class Transformer {
     public static final String COULD_NOT_GET_JAXB_CONTEXT = "Could not get JAXBContext";
     private final Resource resource;
-    private final DynamoRecordDto dynamoRecordDto;
 
     private static final JAXBContext jaxbContext = getContext();
 
@@ -31,9 +30,8 @@ public class Transformer {
     public Transformer(DynamoRecordDto dynamoRecordDto) throws JAXBException {
         marshaller = jaxbContext.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        this.dynamoRecordDto = dynamoRecordDto;
         this.resource = new Resource();
-        fromDynamoRecord();
+        fromDynamoRecord(dynamoRecordDto);
     }
 
     private static JAXBContext getContext() {
@@ -44,30 +42,30 @@ public class Transformer {
         }
     }
 
-    private void fromDynamoRecord() {
-        setResourceIdentifier();
-        setResourceCreators();
-        setResourceTitle();
-        setPublisher();
-        setPublicationYear();
-        setResourceType();
+    private void fromDynamoRecord(DynamoRecordDto dynamoRecordDto) {
+        setResourceIdentifier(dynamoRecordDto);
+        setResourceCreators(dynamoRecordDto);
+        setResourceTitle(dynamoRecordDto);
+        setPublisher(dynamoRecordDto);
+        setPublicationYear(dynamoRecordDto);
+        setResourceType(dynamoRecordDto);
     }
 
-    private void setResourceType() {
+    private void setResourceType(DynamoRecordDto dynamoRecordDto) {
         resource.setResourceType(dynamoRecordDto.getResourceType().toResourceType());
     }
 
-    private void setPublicationYear() {
+    private void setPublicationYear(DynamoRecordDto dynamoRecordDto) {
         resource.setPublicationYear(dynamoRecordDto.getPublicationYear());
     }
 
-    private void setPublisher() {
+    private void setPublisher(DynamoRecordDto dynamoRecordDto) {
         Publisher publisher = new Publisher();
         publisher.setValue(dynamoRecordDto.getPublisher().getValue());
         resource.setPublisher(publisher);
     }
 
-    private void setResourceTitle() {
+    private void setResourceTitle(DynamoRecordDto dynamoRecordDto) {
         Title title = new Title();
         title.setValue(dynamoRecordDto.getTitle().getValue());
         Titles titles = new Titles();
@@ -75,11 +73,11 @@ public class Transformer {
         resource.setTitles(titles);
     }
 
-    private void setResourceIdentifier() {
+    private void setResourceIdentifier(DynamoRecordDto dynamoRecordDto) {
         resource.setIdentifier(dynamoRecordDto.getIdentifier().asIdentifier());
     }
 
-    private void setResourceCreators() {
+    private void setResourceCreators(DynamoRecordDto dynamoRecordDto) {
         var creators = new Resource.Creators();
         dynamoRecordDto.getCreator().stream()
                 .map(CreatorDto::toCreator)

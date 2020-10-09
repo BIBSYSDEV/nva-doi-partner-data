@@ -16,7 +16,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
 
-class TransformerTest {
+class TransformationTest {
 
     public static final String ANY_URI = "https://example.org/123";
     public static final String ANY_NAME = "Wallace, Cornelius";
@@ -27,10 +27,10 @@ class TransformerTest {
     public static final String RESOURCE_TYPE_OTHER = "Other";
 
     @Test
-    void transformerTransformsDynamoRecordDtoWhenInputIsValid() throws JAXBException {
+    void dynamoRecordDtoReturnsTransformedXmlWhenInputIsValid() throws JAXBException {
         var record = generateRecord(ANY_URI, ANY_NAME, ANY_TITLE, ANY_YEAR,
                 ANY_PUBLISHER, ANY_RESOURCE_TYPE);
-        var actual = new Transformer(record).asXml();
+        var actual = record.asXml();
 
         assertThat(actual, containsString(ANY_URI));
         assertThat(actual, containsString(ANY_NAME));
@@ -41,37 +41,37 @@ class TransformerTest {
     }
 
     @Test
-    void transformerReturnsXmlWithSplitName() throws JAXBException {
+    void dynamoRecordDtoReturnsTransformedXmlWithSplitName() throws JAXBException {
         var surname = "Higgs";
         var forename = "Boson";
         var name = String.join(SEPARATOR, surname, forename);
         var record = generateRecord(ANY_URI, name, ANY_TITLE, ANY_YEAR,
                 ANY_PUBLISHER, ANY_RESOURCE_TYPE);
-        var actual = new Transformer(record).asXml();
+        var actual = record.asXml();
         assertThat(actual, containsString(name));
         assertThat(actual, containsString(enclosedString(surname)));
         assertThat(actual, containsString(enclosedString(forename)));
     }
 
     @Test
-    void transformerReturnsXmlWithoutSplitName() throws JAXBException {
+    void dynamoRecordDtoReturnsTransformedXmlWithoutSplitName() throws JAXBException {
         String rank = "Bosun";
         String surname = "Higgs";
 
         var name = rank + " " + surname;
         var record = generateRecord(ANY_URI, name, ANY_TITLE, ANY_YEAR,
                 ANY_PUBLISHER, ANY_RESOURCE_TYPE);
-        var actual = new Transformer(record).asXml();
+        var actual = record.asXml();
         assertThat(actual, containsString(name));
         assertThat(actual, not(containsString(enclosedString(rank))));
         assertThat(actual, not(containsString(enclosedString(surname))));
     }
 
     @Test
-    void transformerReturnsXmlWithResourceTypeGeneralOtherWhenResourceTypeIsNull() throws JAXBException {
+    void dynamoRecordDtoReturnsTransformedXmlWithResourceTypeGeneralOtherWhenResourceTypeIsNull() throws JAXBException {
         var record = generateRecord(ANY_URI, ANY_NAME, ANY_TITLE, ANY_YEAR,
                 ANY_PUBLISHER, null);
-        var actual = new Transformer(record).asXml();
+        var actual = record.asXml();
         assertThat(actual, containsString(RESOURCE_TYPE_OTHER));
     }
 
