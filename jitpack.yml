@@ -1,0 +1,6 @@
+jdk:
+  - openjdk9
+before_install:
+  - ./gradlew fetchSchema
+install:
+  - ./gradlew build
