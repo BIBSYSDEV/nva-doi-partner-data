@@ -68,7 +68,7 @@ allprojects {
         }
     }
 
-    check.dependsOn jacocoTestCoverageVerification
+    check.dependsOn(jacocoTestCoverageVerification)
     jacocoTestCoverageVerification.dependsOn(jacocoTestReport)
 
     jacocoTestCoverageVerification {
@@ -92,4 +92,6 @@ allprojects {
             }
         }
     }
+
+    build.dependsOn(":datacite-data:fetchSchema")
 }
