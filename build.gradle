@@ -92,6 +92,19 @@ allprojects {
             }
         }
     }
-
-    build.dependsOn(":datacite-data:fetchSchema")
 }
+
+dependencies {
+    compile project(':datacite-data')
+    implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
+    implementation group: 'jakarta.xml.bind', name: 'jakarta.xml.bind-api', version: '2.3.2'
+    runtimeOnly group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.2'
+}
+
+jar {
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+jar.dependsOn(":datacite-data:build")
