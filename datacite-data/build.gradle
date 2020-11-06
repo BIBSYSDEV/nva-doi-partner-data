@@ -9,8 +9,6 @@ plugins {
 group 'no.unit.nva'
 version '1.0-SNAPSHOT'
 
-System.setProperty('javax.xml.accessExternalSchema', 'file')
-
 dependencies {
     implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
 }
@@ -34,6 +32,7 @@ jar {
     from "$buildDir/classes/java/main"
 }
 
+System.setProperty('javax.xml.accessExternalSchema', 'all')
 xjc {
     srcDirName = schemaDir
 }
