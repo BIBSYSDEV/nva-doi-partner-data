@@ -2,6 +2,8 @@ plugins {
     id 'nebula.lint' version '16.9.1'
 }
 
+apply plugin: 'maven'
+
 allprojects {
     repositories {
         jcenter()
@@ -12,7 +14,6 @@ allprojects {
     apply plugin: 'checkstyle'
     apply plugin: 'pmd'
     apply plugin: 'nebula.lint'
-    apply plugin: 'maven'
 
     group 'no.unit.nva'
     version '1.0-SNAPSHOT'

@@ -9,6 +9,8 @@ plugins {
 group 'no.unit.nva'
 version '1.0-SNAPSHOT'
 
+System.setProperty('javax.xml.accessExternalSchema', 'file')
+
 repositories {
     maven { url "https://jitpack.io" }
     jcenter()
