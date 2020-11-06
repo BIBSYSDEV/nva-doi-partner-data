@@ -33,6 +33,10 @@ task fetchSchema() {
     }
 }
 
+jar {
+    from "$buildDir/classes/java/main"
+}
+
 xjc {
     srcDirName = schemaDir
 }
