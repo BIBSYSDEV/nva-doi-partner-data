@@ -11,11 +11,6 @@ version '1.0-SNAPSHOT'
 
 System.setProperty('javax.xml.accessExternalSchema', 'file')
 
-repositories {
-    maven { url "https://jitpack.io" }
-    jcenter()
-}
-
 dependencies {
     implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
 }

@@ -2,10 +2,9 @@ plugins {
     id 'nebula.lint' version '16.9.1'
 }
 
-apply plugin: 'maven'
-
 allprojects {
     repositories {
+        maven { url "https://jitpack.io" }
         jcenter()
     }
 
@@ -110,8 +109,3 @@ jar {
 }
 
 jar.dependsOn(":datacite-data:build")
-
-wrapper {
-    gradleVersion = "6.3"
-    distributionType = Wrapper.DistributionType.ALL
-}
