@@ -2,8 +2,11 @@ plugins {
     id 'nebula.lint' version '16.9.1'
 }
 
+apply plugin: 'maven'
+
 allprojects {
     repositories {
+        maven { url "https://jitpack.io" }
         jcenter()
     }
 
@@ -68,7 +71,7 @@ allprojects {
         }
     }
 
-    check.dependsOn jacocoTestCoverageVerification
+    check.dependsOn(jacocoTestCoverageVerification)
     jacocoTestCoverageVerification.dependsOn(jacocoTestReport)
 
     jacocoTestCoverageVerification {
@@ -93,3 +96,18 @@ allprojects {
         }
     }
 }
+
+dependencies {
+    compile project(':datacite-data')
+    implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
+    implementation group: 'jakarta.xml.bind', name: 'jakarta.xml.bind-api', version: '2.3.2'
+    runtimeOnly group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.2'
+}
+
+jar {
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+jar.dependsOn(":datacite-data:build")

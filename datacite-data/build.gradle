@@ -9,11 +9,6 @@ plugins {
 group 'no.unit.nva'
 version '1.0-SNAPSHOT'
 
-repositories {
-    maven { url "https://jitpack.io" }
-    jcenter()
-}
-
 dependencies {
     implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
 }
@@ -33,6 +28,13 @@ task fetchSchema() {
     }
 }
 
+jar {
+    from "$buildDir/classes/java/main"
+}
+
+System.setProperty('javax.xml.accessExternalSchema', 'all')
 xjc {
     srcDirName = schemaDir
 }
+
+build.dependsOn("fetchSchema")
