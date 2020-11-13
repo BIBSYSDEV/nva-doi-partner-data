@@ -2,14 +2,13 @@ plugins {
     id 'nebula.lint' version '16.9.1'
 }
 
-apply plugin: 'maven'
-
 allprojects {
     repositories {
         maven { url "https://jitpack.io" }
         jcenter()
     }
 
+    apply plugin: 'maven'
     apply plugin: 'java-library'
     apply plugin: 'jacoco'
     apply plugin: 'checkstyle'
@@ -25,8 +24,9 @@ allprojects {
 
     gradleLint.rules = ['unused-dependency']
 
+    def junit5Version = '5.6.0'
+
     dependencies {
-        def junit5Version = '5.6.0'
         testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '2.2'
         testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junit5Version
         testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junit5Version
@@ -52,6 +52,10 @@ allprojects {
         ruleSetConfig = rootProject.resources.text.fromFile('config/pmd/ruleset.xml')
         ruleSets = []
         ignoreFailures = false
+    }
+
+    tasks.withType(Pmd) {
+        exclude '**/org/datacite/schema/**'
     }
 
     checkstyle {
@@ -96,18 +100,3 @@ allprojects {
         }
     }
 }
-
-dependencies {
-    compile project(':datacite-data')
-    implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
-    implementation group: 'jakarta.xml.bind', name: 'jakarta.xml.bind-api', version: '2.3.2'
-    runtimeOnly group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.2'
-}
-
-jar {
-    from {
-        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-    }
-}
-
-jar.dependsOn(":datacite-data:build")
