@@ -5,7 +5,7 @@ import no.unit.nva.transformer.Transformer;
 import javax.xml.bind.JAXBException;
 import java.util.List;
 
-public class DynamoRecordDto {
+public class DataCiteMetadataDto {
     private final IdentifierDto identifier;
     private final List<CreatorDto> creator;
     private final TitleDto title;
@@ -13,7 +13,7 @@ public class DynamoRecordDto {
     private final String publicationYear;
     private final ResourceTypeDto resourceType;
 
-    private DynamoRecordDto(Builder builder) {
+    private DataCiteMetadataDto(Builder builder) {
         identifier = builder.identifier;
         creator = builder.creator;
         title = builder.title;
@@ -91,8 +91,8 @@ public class DynamoRecordDto {
             return this;
         }
 
-        public DynamoRecordDto build() {
-            return new DynamoRecordDto(this);
+        public DataCiteMetadataDto build() {
+            return new DataCiteMetadataDto(this);
         }
     }
 }
