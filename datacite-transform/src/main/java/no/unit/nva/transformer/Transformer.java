@@ -31,7 +31,7 @@ public class Transformer {
         marshaller = jaxbContext.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         this.resource = new Resource();
-        dataCiteMes(dataCiteMetadataDto);
+        fromDataCiteMetadataDto(dataCiteMetadataDto);
     }
 
     private static JAXBContext getContext() {
@@ -42,7 +42,7 @@ public class Transformer {
         }
     }
 
-    private void dataCiteMes(DataCiteMetadataDto dataCiteMetadataDto) {
+    private void fromDataCiteMetadataDto(DataCiteMetadataDto dataCiteMetadataDto) {
         setResourceIdentifier(dataCiteMetadataDto);
         setResourceCreators(dataCiteMetadataDto);
         setResourceTitle(dataCiteMetadataDto);
