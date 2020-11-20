@@ -23,8 +23,8 @@ public class Transformer {
     private final Marshaller marshaller;
 
     /**
-     * Transforms a DynamoDB record to a Datacite Record.
-     * @param dataCiteMetadataDto A DynamoDB record.
+     * Transforms a DataCiteMetadataDto to a Datacite Record.
+     * @param dataCiteMetadataDto A DataCiteMetadataDto instance.
      * @throws JAXBException If the XML initialisation fails.
      */
     public Transformer(DataCiteMetadataDto dataCiteMetadataDto) throws JAXBException {

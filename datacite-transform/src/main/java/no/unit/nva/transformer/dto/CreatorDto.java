@@ -18,7 +18,7 @@ public class CreatorDto {
 
 
     /**
-     * Creates a representation of the DynamoDB Creator object that can be transformed to Datacite Creator.
+     * Creates a representation of the DataCiteMetadataDto Creator object that can be transformed to Datacite Creator.
      * @param creatorName A name string.
      * @param nameIdentifier Not yet in use.
      * @param affiliation Not yet in use.

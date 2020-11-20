@@ -1,3 +1,3 @@
 # nva-doi-partner-data
 
-Transforms data from NVA DynamoDB to Datacite XML
+Transforms data from NVA Publication to Datacite XML
