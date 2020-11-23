@@ -1,7 +1,7 @@
 package no.unit.nva.transformer;
 
 import no.unit.nva.transformer.dto.CreatorDto;
-import no.unit.nva.transformer.dto.DynamoRecordDto;
+import no.unit.nva.transformer.dto.DataCiteMetadataDto;
 import no.unit.nva.transformer.dto.IdentifierDto;
 import no.unit.nva.transformer.dto.PublisherDto;
 import no.unit.nva.transformer.dto.ResourceTypeDto;
@@ -79,13 +79,13 @@ class TransformationTest {
         return ">" + string + "<";
     }
 
-    private DynamoRecordDto generateRecord(String identifier,
-                                           String creator,
-                                           String title,
-                                           String year,
-                                           String publisher,
-                                           String resourceType) {
-        return new DynamoRecordDto.Builder()
+    private DataCiteMetadataDto generateRecord(String identifier,
+                                               String creator,
+                                               String title,
+                                               String year,
+                                               String publisher,
+                                               String resourceType) {
+        return new DataCiteMetadataDto.Builder()
                 .withIdentifier(getIdentifier(identifier))
                 .withCreator(getCreator(creator))
                 .withTitle(getTitle(title))

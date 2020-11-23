@@ -1,7 +1,7 @@
 package no.unit.nva.transformer;
 
 import no.unit.nva.transformer.dto.CreatorDto;
-import no.unit.nva.transformer.dto.DynamoRecordDto;
+import no.unit.nva.transformer.dto.DataCiteMetadataDto;
 import org.datacite.schema.kernel_4.Resource;
 import org.datacite.schema.kernel_4.Resource.Publisher;
 import org.datacite.schema.kernel_4.Resource.Titles;
@@ -23,15 +23,15 @@ public class Transformer {
     private final Marshaller marshaller;
 
     /**
-     * Transforms a DynamoDB record to a Datacite Record.
-     * @param dynamoRecordDto A DynamoDB record.
+     * Transforms a DataCiteMetadataDto to a Datacite Record.
+     * @param dataCiteMetadataDto A DataCiteMetadataDto instance.
      * @throws JAXBException If the XML initialisation fails.
      */
-    public Transformer(DynamoRecordDto dynamoRecordDto) throws JAXBException {
+    public Transformer(DataCiteMetadataDto dataCiteMetadataDto) throws JAXBException {
         marshaller = jaxbContext.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         this.resource = new Resource();
-        fromDynamoRecord(dynamoRecordDto);
+        fromDataCiteMetadataDto(dataCiteMetadataDto);
     }
 
     private static JAXBContext getContext() {
@@ -42,44 +42,44 @@ public class Transformer {
         }
     }
 
-    private void fromDynamoRecord(DynamoRecordDto dynamoRecordDto) {
-        setResourceIdentifier(dynamoRecordDto);
-        setResourceCreators(dynamoRecordDto);
-        setResourceTitle(dynamoRecordDto);
-        setPublisher(dynamoRecordDto);
-        setPublicationYear(dynamoRecordDto);
-        setResourceType(dynamoRecordDto);
+    private void fromDataCiteMetadataDto(DataCiteMetadataDto dataCiteMetadataDto) {
+        setResourceIdentifier(dataCiteMetadataDto);
+        setResourceCreators(dataCiteMetadataDto);
+        setResourceTitle(dataCiteMetadataDto);
+        setPublisher(dataCiteMetadataDto);
+        setPublicationYear(dataCiteMetadataDto);
+        setResourceType(dataCiteMetadataDto);
     }
 
-    private void setResourceType(DynamoRecordDto dynamoRecordDto) {
-        resource.setResourceType(dynamoRecordDto.getResourceType().toResourceType());
+    private void setResourceType(DataCiteMetadataDto dataCiteMetadataDto) {
+        resource.setResourceType(dataCiteMetadataDto.getResourceType().toResourceType());
     }
 
-    private void setPublicationYear(DynamoRecordDto dynamoRecordDto) {
-        resource.setPublicationYear(dynamoRecordDto.getPublicationYear());
+    private void setPublicationYear(DataCiteMetadataDto dataCiteMetadataDto) {
+        resource.setPublicationYear(dataCiteMetadataDto.getPublicationYear());
     }
 
-    private void setPublisher(DynamoRecordDto dynamoRecordDto) {
+    private void setPublisher(DataCiteMetadataDto dataCiteMetadataDto) {
         Publisher publisher = new Publisher();
-        publisher.setValue(dynamoRecordDto.getPublisher().getValue());
+        publisher.setValue(dataCiteMetadataDto.getPublisher().getValue());
         resource.setPublisher(publisher);
     }
 
-    private void setResourceTitle(DynamoRecordDto dynamoRecordDto) {
+    private void setResourceTitle(DataCiteMetadataDto dataCiteMetadataDto) {
         Title title = new Title();
-        title.setValue(dynamoRecordDto.getTitle().getValue());
+        title.setValue(dataCiteMetadataDto.getTitle().getValue());
         Titles titles = new Titles();
         titles.getTitle().add(title);
         resource.setTitles(titles);
     }
 
-    private void setResourceIdentifier(DynamoRecordDto dynamoRecordDto) {
-        resource.setIdentifier(dynamoRecordDto.getIdentifier().asIdentifier());
+    private void setResourceIdentifier(DataCiteMetadataDto dataCiteMetadataDto) {
+        resource.setIdentifier(dataCiteMetadataDto.getIdentifier().asIdentifier());
     }
 
-    private void setResourceCreators(DynamoRecordDto dynamoRecordDto) {
+    private void setResourceCreators(DataCiteMetadataDto dataCiteMetadataDto) {
         var creators = new Resource.Creators();
-        dynamoRecordDto.getCreator().stream()
+        dataCiteMetadataDto.getCreator().stream()
                 .map(CreatorDto::toCreator)
                 .collect(Collectors.toList())
                 .forEach(creator -> creators.getCreator().add(creator));
