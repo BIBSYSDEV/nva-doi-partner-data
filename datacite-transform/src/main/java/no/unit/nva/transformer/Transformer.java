@@ -1,29 +1,30 @@
 package no.unit.nva.transformer;
 
+import java.io.StringWriter;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import no.unit.nva.transformer.dto.AlternateIdentifierDto;
 import no.unit.nva.transformer.dto.CreatorDto;
 import no.unit.nva.transformer.dto.DataCiteMetadataDto;
 import org.datacite.schema.kernel_4.Resource;
+import org.datacite.schema.kernel_4.Resource.AlternateIdentifiers;
 import org.datacite.schema.kernel_4.Resource.Publisher;
 import org.datacite.schema.kernel_4.Resource.Titles;
 import org.datacite.schema.kernel_4.Resource.Titles.Title;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import java.io.StringWriter;
-import java.util.stream.Collectors;
-
-
 public class Transformer {
+
     public static final String COULD_NOT_GET_JAXB_CONTEXT = "Could not get JAXBContext";
-    private final Resource resource;
-
     private static final JAXBContext jaxbContext = getContext();
-
+    private final Resource resource;
     private final Marshaller marshaller;
 
     /**
      * Transforms a DataCiteMetadataDto to a Datacite Record.
+     *
      * @param dataCiteMetadataDto A DataCiteMetadataDto instance.
      * @throws JAXBException If the XML initialisation fails.
      */
@@ -32,6 +33,18 @@ public class Transformer {
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         this.resource = new Resource();
         fromDataCiteMetadataDto(dataCiteMetadataDto);
+    }
+
+    /**
+     * Produces an XML string representation of the Datacite record.
+     *
+     * @return String XML.
+     * @throws JAXBException If the record cannot be produced.
+     */
+    public String asXml() throws JAXBException {
+        StringWriter stringWriter = new StringWriter();
+        marshaller.marshal(resource, stringWriter);
+        return stringWriter.toString();
     }
 
     private static JAXBContext getContext() {
@@ -49,6 +62,20 @@ public class Transformer {
         setPublisher(dataCiteMetadataDto);
         setPublicationYear(dataCiteMetadataDto);
         setResourceType(dataCiteMetadataDto);
+        setAlternateIdentifiers(dataCiteMetadataDto);
+    }
+
+    private void setAlternateIdentifiers(DataCiteMetadataDto dataCiteMetadataDto) {
+        var alternateIdentifiers = createAlternativeIdentifiers(dataCiteMetadataDto.getAlternateIdentifiers());
+        resource.setAlternateIdentifiers(alternateIdentifiers);
+    }
+
+    private AlternateIdentifiers createAlternativeIdentifiers(List<AlternateIdentifierDto> alternateIdentifierDtos) {
+        var alternateIdentifiers = new AlternateIdentifiers();
+        alternateIdentifiers.getAlternateIdentifier().addAll(alternateIdentifierDtos.stream().map(
+            AlternateIdentifierDto::asAlternateIdentifier).collect(
+            Collectors.toList()));
+        return alternateIdentifiers;
     }
 
     private void setResourceType(DataCiteMetadataDto dataCiteMetadataDto) {
@@ -80,20 +107,9 @@ public class Transformer {
     private void setResourceCreators(DataCiteMetadataDto dataCiteMetadataDto) {
         var creators = new Resource.Creators();
         dataCiteMetadataDto.getCreator().stream()
-                .map(CreatorDto::toCreator)
-                .collect(Collectors.toList())
-                .forEach(creator -> creators.getCreator().add(creator));
+            .map(CreatorDto::toCreator)
+            .collect(Collectors.toList())
+            .forEach(creator -> creators.getCreator().add(creator));
         resource.setCreators(creators);
-    }
-
-    /**
-     * Produces an XML string representation of the Datacite record.
-     * @return String XML.
-     * @throws JAXBException If the record cannot be produced.
-     */
-    public String asXml() throws JAXBException {
-        StringWriter stringWriter = new StringWriter();
-        marshaller.marshal(resource, stringWriter);
-        return stringWriter.toString();
     }
 }
