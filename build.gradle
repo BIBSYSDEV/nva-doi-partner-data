@@ -1,5 +1,5 @@
 plugins {
-    id 'nebula.lint' version '16.9.1'
+    id 'nebula.lint' version '18.0.3'
 }
 
 allprojects {
