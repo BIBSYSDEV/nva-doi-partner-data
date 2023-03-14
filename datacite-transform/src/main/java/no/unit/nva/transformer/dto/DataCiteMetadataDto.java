@@ -1,17 +1,20 @@
 package no.unit.nva.transformer.dto;
 
+import static java.util.Objects.isNull;
+import java.util.List;
+import javax.xml.bind.JAXBException;
 import no.unit.nva.transformer.Transformer;
 
-import javax.xml.bind.JAXBException;
-import java.util.List;
-
 public class DataCiteMetadataDto {
+
     private final IdentifierDto identifier;
     private final List<CreatorDto> creator;
     private final TitleDto title;
     private final PublisherDto publisher;
     private final String publicationYear;
     private final ResourceTypeDto resourceType;
+
+    private final List<AlternateIdentifierDto> alternateIdentifiers;
 
     private DataCiteMetadataDto(Builder builder) {
         identifier = builder.identifier;
@@ -20,6 +23,7 @@ public class DataCiteMetadataDto {
         publisher = builder.publisher;
         publicationYear = builder.publicationYear;
         resourceType = builder.resourceType;
+        alternateIdentifiers = builder.alternateIdentifiers;
     }
 
     public String asXml() throws JAXBException {
@@ -50,13 +54,19 @@ public class DataCiteMetadataDto {
         return resourceType;
     }
 
+    public List<AlternateIdentifierDto> getAlternateIdentifiers() {
+        return isNull(alternateIdentifiers) || alternateIdentifiers.isEmpty() ? List.of() : alternateIdentifiers;
+    }
+
     public static final class Builder {
+
         private IdentifierDto identifier;
         private List<CreatorDto> creator;
         private TitleDto title;
         private PublisherDto publisher;
         private String publicationYear;
         private ResourceTypeDto resourceType;
+        private List<AlternateIdentifierDto> alternateIdentifiers;
 
         public Builder() {
         }
@@ -88,6 +98,11 @@ public class DataCiteMetadataDto {
 
         public Builder withResourceType(ResourceTypeDto resourceType) {
             this.resourceType = resourceType;
+            return this;
+        }
+
+        public Builder withAlternateIdentifiers(List<AlternateIdentifierDto> alternateIdentifiers) {
+            this.alternateIdentifiers = alternateIdentifiers;
             return this;
         }
 
