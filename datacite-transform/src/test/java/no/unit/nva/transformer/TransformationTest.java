@@ -4,7 +4,7 @@ import no.unit.nva.transformer.dto.AlternateIdentifierDto;
 import no.unit.nva.transformer.dto.CreatorDto;
 import no.unit.nva.transformer.dto.DataCiteMetadataDto;
 import no.unit.nva.transformer.dto.IdentifierDto;
-import no.unit.nva.transformer.dto.IdentifierDto.IdentifierType;
+import no.unit.nva.transformer.dto.IdentifierType;
 import no.unit.nva.transformer.dto.PublisherDto;
 import no.unit.nva.transformer.dto.ResourceTypeDto;
 import no.unit.nva.transformer.dto.TitleDto;

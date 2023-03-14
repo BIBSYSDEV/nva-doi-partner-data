@@ -24,14 +24,9 @@ public class IdentifierDto {
      */
     public Identifier asIdentifier() {
         Identifier identifier = new Identifier();
-        identifier.setIdentifierType(type.toString());
+        identifier.setIdentifierType(type.getValue());
         identifier.setValue(value);
         return identifier;
-    }
-
-    public enum IdentifierType {
-        DOI,
-        URL
     }
 
     public static final class Builder {
