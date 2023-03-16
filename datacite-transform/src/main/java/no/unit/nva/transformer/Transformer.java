@@ -51,7 +51,7 @@ public class Transformer {
         try {
             return JAXBContext.newInstance(Resource.class);
         } catch (JAXBException e) {
-            throw new RuntimeException(COULD_NOT_GET_JAXB_CONTEXT);
+            throw new RuntimeException(COULD_NOT_GET_JAXB_CONTEXT, e);
         }
     }
 

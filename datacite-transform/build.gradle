@@ -7,12 +7,12 @@ plugins {
 }
 
 group 'no.unit.nva'
-version '0.5.0'
+version '0.5.1'
 
 dependencies {
     implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
     implementation group: 'jakarta.xml.bind', name: 'jakarta.xml.bind-api', version: '2.3.2'
-    runtimeOnly group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.2'
+    runtimeOnly group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.0'
 }
 
 def schemaDir = "${buildDir}/tmp/schema/"
