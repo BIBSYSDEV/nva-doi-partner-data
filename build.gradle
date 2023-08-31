@@ -16,7 +16,7 @@ allprojects {
     apply plugin: 'nebula.lint'
 
     group 'no.unit.nva'
-    version '0.5.0'
+    version '0.5.2'
 
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
@@ -24,7 +24,7 @@ allprojects {
 
     gradleLint.rules = ['unused-dependency']
 
-    def junit5Version = '5.6.0'
+    def junit5Version = '5.9.3'
 
     dependencies {
         testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '2.2'
