@@ -8,6 +8,7 @@ allprojects {
         maven { url "https://jitpack.io" }
     }
 
+    apply plugin: 'maven-publish'
     apply plugin: 'java-library'
     apply plugin: 'jacoco'
     apply plugin: 'checkstyle'
@@ -15,7 +16,7 @@ allprojects {
     apply plugin: 'nebula.lint'
 
     group 'no.unit.nva'
-    version '0.5.2'
+    version '0.5.3'
 
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
