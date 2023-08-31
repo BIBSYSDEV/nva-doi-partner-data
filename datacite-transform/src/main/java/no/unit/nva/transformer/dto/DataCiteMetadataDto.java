@@ -5,7 +5,7 @@ import java.util.List;
 import javax.xml.bind.JAXBException;
 import no.unit.nva.transformer.Transformer;
 
-public class DataCiteMetadataDto {
+public final class DataCiteMetadataDto {
 
     private final IdentifierDto identifier;
     private final List<CreatorDto> creator;

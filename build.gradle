@@ -1,14 +1,13 @@
 plugins {
-    id 'nebula.lint' version '16.9.1'
+    id 'nebula.lint' version '18.1.0'
 }
 
 allprojects {
     repositories {
+        mavenCentral()
         maven { url "https://jitpack.io" }
-        jcenter()
     }
 
-    apply plugin: 'maven'
     apply plugin: 'java-library'
     apply plugin: 'jacoco'
     apply plugin: 'checkstyle'
@@ -16,7 +15,7 @@ allprojects {
     apply plugin: 'nebula.lint'
 
     group 'no.unit.nva'
-    version '0.5.0'
+    version '0.5.2'
 
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
@@ -24,7 +23,7 @@ allprojects {
 
     gradleLint.rules = ['unused-dependency']
 
-    def junit5Version = '5.6.0'
+    def junit5Version = '5.9.3'
 
     dependencies {
         testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '2.2'
@@ -44,7 +43,7 @@ allprojects {
 
     jacocoTestReport {
         reports {
-            xml.enabled true
+            xml.required = true
         }
     }
 
@@ -69,8 +68,8 @@ allprojects {
 
     tasks.withType(Checkstyle) {
         reports {
-            xml.enabled false
-            html.enabled true
+            xml.required = false
+            html.required = true
             html.stylesheet rootProject.resources.text.fromFile('config/checkstyle/checkstyle-simple.xsl')
         }
     }
