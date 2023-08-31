@@ -43,7 +43,7 @@ allprojects {
 
     jacocoTestReport {
         reports {
-            xml.enabled true
+            xml.required = true
         }
     }
 
@@ -68,8 +68,8 @@ allprojects {
 
     tasks.withType(Checkstyle) {
         reports {
-            xml.enabled false
-            html.enabled true
+            xml.required = false
+            html.required = true
             html.stylesheet rootProject.resources.text.fromFile('config/checkstyle/checkstyle-simple.xsl')
         }
     }
