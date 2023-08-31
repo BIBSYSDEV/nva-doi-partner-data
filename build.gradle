@@ -16,7 +16,7 @@ allprojects {
     apply plugin: 'nebula.lint'
 
     group 'no.unit.nva'
-    version '0.5.3'
+    version '0.5.5'
 
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
