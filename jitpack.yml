@@ -1,2 +1,5 @@
 jdk:
   - openjdk11
+install:
+  - ./gradlew build
+  - ./gradlew -Pgroup=com.github.BIBSYSDEV -Pversion=v0.5.8 -xtest assemble publishToMavenLocal
