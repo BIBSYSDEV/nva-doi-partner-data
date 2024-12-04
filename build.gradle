@@ -1,5 +1,5 @@
 plugins {
-    id 'nebula.lint' version '18.1.0'
+    id 'nebula.lint' version '20.3.0'
 }
 
 allprojects {
@@ -16,18 +16,19 @@ allprojects {
     apply plugin: 'nebula.lint'
 
     group 'no.unit.nva'
-    version '0.5.8'
+    version '0.5.9'
 
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 
 
     gradleLint.rules = ['unused-dependency']
 
-    def junit5Version = '5.9.3'
+    def junit5Version = '5.11.3'
 
     dependencies {
-        testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '2.2'
+        implementation group: 'jakarta.xml.bind', name: 'jakarta.xml.bind-api', version: '4.0.2'
+        testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '3.0'
         testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junit5Version
         testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junit5Version
         testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junit5Version

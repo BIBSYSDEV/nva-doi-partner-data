@@ -1,11 +1,11 @@
 package no.unit.nva.transformer;
 
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
 import java.io.StringWriter;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import no.unit.nva.transformer.dto.AlternateIdentifierDto;
 import no.unit.nva.transformer.dto.CreatorDto;
 import no.unit.nva.transformer.dto.DataCiteMetadataDto;

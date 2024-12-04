@@ -1,8 +1,8 @@
 package no.unit.nva.transformer.dto;
 
 import static java.util.Objects.isNull;
+import jakarta.xml.bind.JAXBException;
 import java.util.List;
-import javax.xml.bind.JAXBException;
 import no.unit.nva.transformer.Transformer;
 
 public final class DataCiteMetadataDto {
