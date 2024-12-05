@@ -132,8 +132,8 @@ class TransformationTest {
     }
 
     private List<AlternateIdentifierDto> getAlternateIdentifiers(String resourceIdentifier) {
-        return nonNull(resourceIdentifier) ?
-                   List.of(new AlternateIdentifierDto.Builder().withValue(resourceIdentifier).build())
+        return nonNull(resourceIdentifier)
+                   ? List.of(new AlternateIdentifierDto.Builder().withValue(resourceIdentifier).build())
                    : List.of();
     }
 

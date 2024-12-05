@@ -18,8 +18,10 @@ allprojects {
     group 'no.unit.nva'
     version '0.5.9'
 
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    java {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    }
 
 
     gradleLint.rules = ['unused-dependency']
