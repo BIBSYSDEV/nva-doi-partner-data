@@ -3,6 +3,12 @@ plugins {
     id 'jacoco-report-aggregation'
 }
 
+dependencies {
+    subprojects.forEach {
+        jacocoAggregation it
+    }
+}
+
 allprojects {
     repositories {
         mavenCentral()
