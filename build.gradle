@@ -55,6 +55,7 @@ allprojects {
         ruleSetConfig = rootProject.resources.text.fromFile('config/pmd/ruleset.xml')
         ruleSets = []
         ignoreFailures = false
+        toolVersion = "7.8.0"
     }
 
     tasks.withType(Pmd).configureEach {
@@ -66,11 +67,11 @@ allprojects {
         showViolations = true
     }
 
-    tasks.withType(Checkstyle) {
+    tasks.withType(Checkstyle).configureEach {
         exclude '**/org/datacite/schema/**'
     }
 
-    tasks.withType(Checkstyle) {
+    tasks.withType(Checkstyle).configureEach {
         reports {
             xml.required = false
             html.required = true

@@ -11,7 +11,6 @@
   <exclude-pattern>.*/datacite-data/.*</exclude-pattern>
 
   <rule ref="category/java/errorprone.xml">
-    <exclude name="DataflowAnomalyAnalysis"/>
     <exclude name="MissingSerialVersionUID"/>
   </rule>
 
@@ -37,9 +36,7 @@
     <exclude name="TooManyStaticImports"/>
     <exclude name="ClassNamingConventions"/>
     <exclude name="UnnecessaryConstructor"/>
-
-    <!--<exclude name="BeanMembersShouldSerialize"/>-->
-
+    <exclude name="UseExplicitTypes"/>
     <exclude name="ConfusingTernary"/>
 
     <!-- printStackTrace is used in the Default Amazon handler in a static clause
