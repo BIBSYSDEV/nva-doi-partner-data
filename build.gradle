@@ -33,7 +33,7 @@ allprojects {
         testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '3.0'
         testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junit5Version
         testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junit5Version
-        testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junit5Version
+        testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher', version: '1.11.3'
     }
 
     test {
@@ -57,7 +57,7 @@ allprojects {
         ignoreFailures = false
     }
 
-    tasks.withType(Pmd) {
+    tasks.withType(Pmd).configureEach {
         exclude '**/org/datacite/schema/**'
     }
 
