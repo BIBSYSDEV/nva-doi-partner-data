@@ -1,5 +1,12 @@
 plugins {
     id 'nebula.lint' version '20.3.0'
+    id 'jacoco-report-aggregation'
+}
+
+dependencies {
+    subprojects.forEach {
+        jacocoAggregation it
+    }
 }
 
 allprojects {
@@ -14,6 +21,7 @@ allprojects {
     apply plugin: 'checkstyle'
     apply plugin: 'pmd'
     apply plugin: 'nebula.lint'
+    apply plugin: 'jacoco-report-aggregation'
 
     group 'no.unit.nva'
     version '0.5.9'
@@ -100,6 +108,18 @@ allprojects {
                     value = 'COVEREDRATIO'
                     minimum = 1.00
                 }
+            }
+        }
+    }
+
+    tasks.named('check') {
+        dependsOn tasks.named('testCodeCoverageReport', JacocoReport)
+    }
+
+    reporting {
+        reports {
+            testCodeCoverageReport(JacocoCoverageReport) {
+                testType = TestSuiteType.UNIT_TEST
             }
         }
     }
