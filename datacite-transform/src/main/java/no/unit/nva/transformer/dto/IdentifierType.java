@@ -11,7 +11,7 @@ public enum IdentifierType {
     }
 
     public static IdentifierType fromValue(String v) {
-        for (IdentifierType c : IdentifierType.values()) {
+        for (IdentifierType c : values()) {
             if (c.getValue().equalsIgnoreCase(v)) {
                 return c;
             }

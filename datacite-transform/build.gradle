@@ -1,41 +1,80 @@
-import java.nio.file.Files
-import java.nio.file.Paths
-
 plugins {
     id 'java'
-    id "org.unbroken-dome.xjc" version "2.0.0"
+    id("com.github.bjornvester.xjc") version "1.8.1"
+    id "de.undercouch.download" version "5.6.0"
 }
 
 group 'no.unit.nva'
 
 dependencies {
-    implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
-    implementation group: 'jakarta.xml.bind', name: 'jakarta.xml.bind-api', version: '2.3.2'
-    runtimeOnly group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.1'
+    implementation group: 'jakarta.xml.bind', name: 'jakarta.xml.bind-api', version: '4.0.2'
+    runtimeOnly group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '4.0.5'
 }
 
-def schemaDir = "${buildDir}/tmp/schema/"
+ext.SCHEMA_VERSION = '4.5'
+ext.SCHEMA_DIR = file(layout.buildDirectory.asFile.get().toURI().toString() + '/tmp/schema')
+ext.METADATA_XSD = 'metadata.xsd'
+ext.DID_DOWNLOAD = new HashMap<String, Boolean>()
 
-task fetchSchema() {
-    def schemaVersion = '4.4'
-
-    mkdir(schemaDir)
-
-    def urlFile = "datacite.url"
-
-    if (!file(schemaDir + urlFile).exists()) {
-        Files.createFile(Paths.get(schemaDir + urlFile))
-                .text = "https://schema.datacite.org/meta/kernel-${schemaVersion}/metadata.xsd"
+tasks.register('fetchSchema') {
+    doLast {
+        getUris().forEach {
+            downloadFile(it.toString())
+        }
+        if (DID_DOWNLOAD.any { it.value == false }) {
+            System.out.println("WARN: Some XSD files were cached from a previous run, to avoid this, run ./gradlew clean")
+        }
     }
 }
 
+private List<String> getUris() {
+
+    def source = downloadFile(METADATA_XSD)
+
+    def xml = new groovy.xml.XmlSlurper().parseText(source.getText())
+
+    return xml.'**'.findAll {
+        it.name() == 'include' || it.name() == 'import'
+    }.collect {
+        it.@'schemaLocation'
+    }
+}
+
+private File downloadFile(String path) {
+    def uri = "https://schema.datacite.org/meta/kernel-${SCHEMA_VERSION}/${path}"
+    def file = file(SCHEMA_DIR.toURI().toString() + '/' + path)
+
+    if (!file.exists()) {
+        def destination = path.contains("/") ? file.parentFile : SCHEMA_DIR
+        destination.mkdirs()
+        download.run {
+            src uri
+            dest destination
+        }
+        DID_DOWNLOAD.put(path, true)
+    } else {
+        DID_DOWNLOAD.put(path, false)
+    }
+    return file;
+}
+
 jar {
-    from "$buildDir/classes/java/main"
+    from "${layout.buildDirectory}/classes/java/main"
 }
 
-System.setProperty('javax.xml.accessExternalSchema', 'all')
+tasks.named('sourcesJar') {
+    dependsOn('xjc')
+}
+
+
 xjc {
-    srcDirName = schemaDir
+    xsdDir.set(layout.projectDirectory.dir(SCHEMA_DIR.toURI().toString()))
 }
 
-build.dependsOn("fetchSchema")
+tasks.named('xjc') {
+    dependsOn('fetchSchema')
+}
+
+tasks.named('compileJava') {
+    dependsOn('xjc')
+}

@@ -1,5 +1,5 @@
 jdk:
-  - openjdk11
+  - openjdk21
 install:
   - ./gradlew build
-  - ./gradlew -Pgroup=com.github.BIBSYSDEV -Pversion=v0.5.8 -xtest assemble publishToMavenLocal
+  - ./gradlew -Pgroup=com.github.BIBSYSDEV -Pversion=v0.5.9 -xtest assemble publishToMavenLocal

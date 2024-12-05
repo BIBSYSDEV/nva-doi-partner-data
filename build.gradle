@@ -1,5 +1,12 @@
 plugins {
-    id 'nebula.lint' version '18.1.0'
+    id 'nebula.lint' version '20.3.0'
+    id 'jacoco-report-aggregation'
+}
+
+dependencies {
+    subprojects.forEach {
+        jacocoAggregation it
+    }
 }
 
 allprojects {
@@ -14,23 +21,27 @@ allprojects {
     apply plugin: 'checkstyle'
     apply plugin: 'pmd'
     apply plugin: 'nebula.lint'
+    apply plugin: 'jacoco-report-aggregation'
 
     group 'no.unit.nva'
-    version '0.5.8'
+    version '0.5.9'
 
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    java {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    }
 
 
     gradleLint.rules = ['unused-dependency']
 
-    def junit5Version = '5.9.3'
+    def junit5Version = '5.11.3'
 
     dependencies {
-        testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '2.2'
+        implementation group: 'jakarta.xml.bind', name: 'jakarta.xml.bind-api', version: '4.0.2'
+        testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '3.0'
         testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junit5Version
         testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junit5Version
-        testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junit5Version
+        testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher', version: '1.11.3'
     }
 
     test {
@@ -52,9 +63,10 @@ allprojects {
         ruleSetConfig = rootProject.resources.text.fromFile('config/pmd/ruleset.xml')
         ruleSets = []
         ignoreFailures = false
+        toolVersion = "7.8.0"
     }
 
-    tasks.withType(Pmd) {
+    tasks.withType(Pmd).configureEach {
         exclude '**/org/datacite/schema/**'
     }
 
@@ -63,11 +75,11 @@ allprojects {
         showViolations = true
     }
 
-    tasks.withType(Checkstyle) {
+    tasks.withType(Checkstyle).configureEach {
         exclude '**/org/datacite/schema/**'
     }
 
-    tasks.withType(Checkstyle) {
+    tasks.withType(Checkstyle).configureEach {
         reports {
             xml.required = false
             html.required = true
@@ -96,6 +108,18 @@ allprojects {
                     value = 'COVEREDRATIO'
                     minimum = 1.00
                 }
+            }
+        }
+    }
+
+    tasks.named('check') {
+        dependsOn tasks.named('testCodeCoverageReport', JacocoReport)
+    }
+
+    reporting {
+        reports {
+            testCodeCoverageReport(JacocoCoverageReport) {
+                testType = TestSuiteType.UNIT_TEST
             }
         }
     }

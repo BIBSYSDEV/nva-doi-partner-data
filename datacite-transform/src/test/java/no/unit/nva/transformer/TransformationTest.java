@@ -1,5 +1,6 @@
 package no.unit.nva.transformer;
 
+import jakarta.xml.bind.JAXBException;
 import no.unit.nva.transformer.dto.AlternateIdentifierDto;
 import no.unit.nva.transformer.dto.CreatorDto;
 import no.unit.nva.transformer.dto.DataCiteMetadataDto;
@@ -10,7 +11,6 @@ import no.unit.nva.transformer.dto.ResourceTypeDto;
 import no.unit.nva.transformer.dto.TitleDto;
 import org.junit.jupiter.api.Test;
 
-import javax.xml.bind.JAXBException;
 import java.util.List;
 
 import static java.util.Objects.nonNull;
@@ -132,8 +132,8 @@ class TransformationTest {
     }
 
     private List<AlternateIdentifierDto> getAlternateIdentifiers(String resourceIdentifier) {
-        return nonNull(resourceIdentifier) ?
-                   List.of(new AlternateIdentifierDto.Builder().withValue(resourceIdentifier).build())
+        return nonNull(resourceIdentifier)
+                   ? List.of(new AlternateIdentifierDto.Builder().withValue(resourceIdentifier).build())
                    : List.of();
     }
 
