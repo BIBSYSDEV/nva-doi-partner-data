@@ -24,7 +24,7 @@ allprojects {
     apply plugin: 'jacoco-report-aggregation'
 
     group 'no.unit.nva'
-    version '0.5.9'
+    version '0.5.10'
 
     java {
         sourceCompatibility = JavaVersion.VERSION_21

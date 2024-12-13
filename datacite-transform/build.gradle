@@ -11,7 +11,7 @@ dependencies {
     runtimeOnly group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '4.0.5'
 }
 
-ext.SCHEMA_VERSION = '4.5'
+ext.SCHEMA_VERSION = '4.6'
 ext.SCHEMA_DIR = file(layout.buildDirectory.asFile.get().toURI().toString() + '/tmp/schema')
 ext.METADATA_XSD = 'metadata.xsd'
 ext.DID_DOWNLOAD = new HashMap<String, Boolean>()
