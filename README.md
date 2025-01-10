@@ -6,7 +6,7 @@ A Java API for creation of Datacite metadata (DataciteXML).
 
 Add JitPack repository to your build, e.g. for gradle:
 
-```
+```Gradle
     repositories {
         maven { url 'https://jitpack.io' }
     }
@@ -14,7 +14,7 @@ Add JitPack repository to your build, e.g. for gradle:
 
 Add the dependency to your code, e.g. for gradle:
 
-```
+```Gradle
     dependencies {
         implementation 'com.github.BIBSYSDEV:nva-doi-partner-data:Tag'
     }
@@ -22,7 +22,7 @@ Add the dependency to your code, e.g. for gradle:
 
 Code usage:
 
-```
+```Java
     var creator = new CreatorDto.Builder()
                    .withCreatorName("Name Nameson")
                    .build();
@@ -50,3 +50,16 @@ Code usage:
 ## Limitations
 
 The ResourceType is mapped either to Text or Other based on the presence of a textual value (Text) or null (Other).
+
+## Development
+
+1. Install the Java version listed as target in [build.gradle](build.gradle)
+2. Build with gradle
+
+## Publishing new versions
+
+1. Create a Github release
+2. Check [Jitpack.io](https://jitpack.io/#BIBSYSDEV/nva-doi-partner-data) to verify that code is released
+
+
+
