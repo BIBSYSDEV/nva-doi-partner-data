@@ -2,6 +2,10 @@
 
 A Java API for creating Datacite metadata (DataciteXML).
 
+This code is typically used to create a Datacite XML representation of data for insertion into Datacite via the Datacite API.
+
+In NVA, this code is used to create a representation of the Publication as a content-negotiated response from the /publication API.
+
 ## Usage
 
 Add JitPack repository to your build, e.g. for gradle:
@@ -60,6 +64,3 @@ The ResourceType is mapped either to Text or Other based on the presence of a te
 
 1. Create a Github release
 2. Check [Jitpack.io](https://jitpack.io/#BIBSYSDEV/nva-doi-partner-data) to verify that code is released
-
-
-
