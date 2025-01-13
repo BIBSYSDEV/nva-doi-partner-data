@@ -1,3 +1,66 @@
 # nva-doi-partner-data
 
-Transforms data from NVA Publication to Datacite XML
+A Java API for creating Datacite metadata (DataciteXML).
+
+This code is typically used to create a Datacite XML representation of data for insertion into Datacite via the Datacite API.
+
+In NVA, this code is used to create a representation of the Publication as a content-negotiated response from the /publication API.
+
+## Usage
+
+Add JitPack repository to your build, e.g. for gradle:
+
+```Gradle
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
+```
+
+Add the dependency to your code, e.g. for gradle:
+
+```Gradle
+    dependencies {
+        implementation 'com.github.BIBSYSDEV:nva-doi-partner-data:Tag'
+    }
+```
+
+Code usage:
+
+```Java
+    var creator = new CreatorDto.Builder()
+                   .withCreatorName("Name Nameson")
+                   .build();
+    var identifier = new IdentifierDto.Builder().withType(IdentifierType.DOI).withValue("10.NNN/yyyyy).build();
+    var alternateIdentifiers = List.of(new AlternateIdentifierDto.Builder()
+                           .withValue("OtherIdentifier")
+                           .build());
+    var publisher = new PublisherDto.Builder().withValue("Some publisher name").build();
+    var title = new TitleDto.Builder().withValue("Some title").build();
+    var resourceType = new ResourceTypeDto.Builder()
+                   .withValue("Some resource type")
+                   .build();
+    var xml = new DataCiteMetadataDto.Builder()
+                   .withCreator(creator)
+                   .withIdentifier(identifier)
+                   .withAlternateIdentifiers(alternateIdentifiers)
+                   .withPublicationYear("2022")
+                   .withPublisher(publisher)
+                   .withTitle(title)
+                   .withResourceType(resourceType)
+                   .build()
+                   .asXml();
+```
+
+## Limitations
+
+The ResourceType is mapped either to Text or Other based on the presence of a textual value (Text) or null (Other).
+
+## Development
+
+1. Install the Java version listed as target in [build.gradle](build.gradle)
+2. Build with gradle
+
+## Publishing new versions
+
+1. Create a Github release
+2. Check [Jitpack.io](https://jitpack.io/#BIBSYSDEV/nva-doi-partner-data) to verify that code is released
