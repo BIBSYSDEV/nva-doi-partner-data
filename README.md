@@ -1,6 +1,6 @@
 # nva-doi-partner-data
 
-A Java API for creation of Datacite metadata (DataciteXML).
+A Java API for creating Datacite metadata (DataciteXML).
 
 ## Usage
 
