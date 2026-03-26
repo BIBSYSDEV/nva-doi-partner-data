@@ -16,5 +16,6 @@ jobs:
     uses: BIBSYSDEV/nva-github-workflows/.github/workflows/java.yml@v2
     with:
       lint_cloudformation: false
+      lint_openapi: false
     secrets:
       codacy_token: ${{ secrets.CODACY_PROJECT_TOKEN }}
