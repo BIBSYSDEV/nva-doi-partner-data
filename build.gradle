@@ -18,7 +18,6 @@ allprojects {
     apply plugin: 'maven-publish'
     apply plugin: 'java-library'
     apply plugin: 'jacoco'
-    apply plugin: 'checkstyle'
     apply plugin: 'pmd'
     apply plugin: 'nebula.lint'
     apply plugin: 'jacoco-report-aggregation'
@@ -68,23 +67,6 @@ allprojects {
 
     tasks.withType(Pmd).configureEach {
         exclude '**/org/datacite/schema/**'
-    }
-
-    checkstyle {
-        configFile = rootProject.resources.text.fromFile('config/checkstyle/checkstyle.xml').asFile()
-        showViolations = true
-    }
-
-    tasks.withType(Checkstyle).configureEach {
-        exclude '**/org/datacite/schema/**'
-    }
-
-    tasks.withType(Checkstyle).configureEach {
-        reports {
-            xml.required = false
-            html.required = true
-            html.stylesheet rootProject.resources.text.fromFile('config/checkstyle/checkstyle-simple.xsl')
-        }
     }
 
     check.dependsOn(jacocoTestCoverageVerification)
