@@ -1,5 +1,4 @@
 plugins {
-    id 'nebula.lint' version '20.3.0'
     id 'jacoco-report-aggregation'
 }
 
@@ -19,7 +18,6 @@ allprojects {
     apply plugin: 'java-library'
     apply plugin: 'jacoco'
     apply plugin: 'pmd'
-    apply plugin: 'nebula.lint'
     apply plugin: 'jacoco-report-aggregation'
 
     group 'no.unit.nva'
@@ -31,7 +29,6 @@ allprojects {
     }
 
 
-    gradleLint.rules = ['unused-dependency']
 
     def junit5Version = '5.11.3'
 
@@ -50,12 +47,6 @@ allprojects {
             events = ['skipped', 'passed', 'failed']
         }
         finalizedBy jacocoTestReport
-    }
-
-    jacocoTestReport {
-        reports {
-            xml.required = true
-        }
     }
 
     pmd {
@@ -96,14 +87,6 @@ allprojects {
 
     tasks.named('check') {
         dependsOn tasks.named('testCodeCoverageReport', JacocoReport)
-    }
-
-    reporting {
-        reports {
-            testCodeCoverageReport(JacocoCoverageReport) {
-                testType = TestSuiteType.UNIT_TEST
-            }
-        }
     }
 
     java {
