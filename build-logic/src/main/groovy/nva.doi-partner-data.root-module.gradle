@@ -1,0 +1,13 @@
+plugins {
+    id 'nva.root-module-conventions'
+}
+
+nva {
+    dependencyAnalysis {
+        enforced = true
+    }
+    generatedCode = ['**/org/datacite/schema/**']
+    spotless {
+        enabled = false
+    }
+}

@@ -1,0 +1,13 @@
+[versions]
+glassfishJaxbRuntime = { strictly = '4.0.9' }
+jakartaAnnotationApi = { strictly = '3.0.0' }
+jakartaXmlBindApi = { strictly = '4.0.5' }
+xjc = { strictly = '1.9.1' }
+
+[libraries]
+glassfish-jaxb-runtime = { group = 'org.glassfish.jaxb', name = 'jaxb-runtime', version.ref = 'glassfishJaxbRuntime' }
+jakarta-annotation-api = { group = 'jakarta.annotation', name = 'jakarta.annotation-api', version.ref = 'jakartaAnnotationApi' }
+jakarta-xml-bind-api = { group = 'jakarta.xml.bind', name = 'jakarta.xml.bind-api', version.ref = 'jakartaXmlBindApi' }
+
+[plugins]
+xjc = { id = 'com.github.bjornvester.xjc', version.ref = 'xjc' }

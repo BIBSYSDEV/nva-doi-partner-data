@@ -1,0 +1,33 @@
+plugins {
+    id 'nva.java-conventions'
+}
+
+nva {
+    errorprone {
+        allErrorsAsWarnings = false
+    }
+    generatedCode = ['**/org/datacite/schema/**']
+    pmd {
+        rulesetFile = rootProject.file('config/pmd/ruleset.xml')
+    }
+    spotless {
+        enabled = false
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = project.name
+            from components.java
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+        }
+    }
+}
