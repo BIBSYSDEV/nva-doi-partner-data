@@ -1,7 +1,3 @@
 plugins {
     id 'nva.doi-partner-data.root-module'
-    id 'maven-publish'
 }
-
-group = 'no.unit.nva'
-version = '0.5.12'
