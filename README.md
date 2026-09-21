@@ -1,5 +1,10 @@
 # nva-doi-partner-data
 
+> **This repository is archived.**
+> The code has been moved into [nva-publication-api](https://github.com/BIBSYSDEV/nva-publication-api), which was its only consumer.
+> See [nva-publication-api#2556](https://github.com/BIBSYSDEV/nva-publication-api/pull/2556) for the migration.
+> No further releases will be published from this repository.
+
 A Java API for creating Datacite metadata (DataciteXML).
 
 This code is typically used to create a Datacite XML representation of data for insertion into Datacite via the Datacite API.
